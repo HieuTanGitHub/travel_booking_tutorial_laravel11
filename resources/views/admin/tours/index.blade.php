@@ -21,6 +21,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Gallery</th>
+                        <th scope="col">Lịch trình</th>
                         <th scope="col">Tiêu đề</th>
                         <th scope="col">Danh mục</th>
                         <th scope="col">Giá tour</th>
@@ -44,6 +45,7 @@
                         <tr>
                             <th scope="row">{{ $key }}</th>
                             <th scope="row"><a href="{{ route('gallery.edit', [$tour->id]) }}">Thêm ảnh</a></th>
+                            <th scope="row"><a href="{{ route('schedule.edit', [$tour->id]) }}">Thêm lịch trình</a></th>
                             <td>{{ $tour->title }}</td>
                             <td>{{ $tour->category->title }}</td>
                             <td>{{ number_format($tour->price, 0, ',', '.') }}vnd</td>

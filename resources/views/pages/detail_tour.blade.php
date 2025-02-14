@@ -24,13 +24,11 @@
                             <div class="col-md-12 col-xs-12">
                                 <div class="w100 fl bimg-dt-left">
                                     <div class="box-wap-imgpr-dt">
-                                        {{-- <img alt="{{ $tour->slug }}" src="{{ asset('uploads/tours/' . $tour->image) }}"
-                                            width="100%"> --}}
+
                                         <div class="owl-carousel owl-theme owl-gallery-tour">
-                                            @if (empty($galleries))
-                                                <div> <img class="img img-responsive"
-                                                        src="{{ asset('uploads/tours/' . $tour->image) }}"
-                                                        alt="{{ $tour->title }}"> </div>
+                                            @if ($galleries == '')
+                                                <img alt="{{ $tour->slug }}"
+                                                    src="{{ asset('uploads/tours/' . $tour->image) }}" width="100%">
                                             @else
                                                 @foreach ($galleries as $key => $gallery)
                                                     <div> <img class="img img-responsive"
