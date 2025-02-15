@@ -101,22 +101,42 @@
                     <div class="w100 fl"></div>
                     <div class="b-detail-ct-tour w100 fl top-20">
                         <ul class="nav nav-tabs tab-dt-tour">
-                            <li class="active"><a data-toggle="tab" href="#home">Mô tả tour</a></li>
-                            <li><a data-toggle="tab" href="#menu1">Lịch trình tour</a></li>
-                            <li id="tit_tab_booking"><a data-toggle="tab" href="#menu2">Ảnh du lịch</a></li>
+                            <li class="active"><a data-toggle="tab" href="#mota">Mô tả tour</a></li>
+                            <li><a data-toggle="tab" href="#lichtrinh">Lịch trình tour</a></li>
+                            <li><a data-toggle="tab" href="#chinhsach">Chính sách</a></li>
+                            <li><a data-toggle="tab" href="#baogom">Bao gồm</a></li>
+                            <li><a data-toggle="tab" href="#khongbaogom">Không bao gồm</a></li>
+                            <li id="tit_tab_booking"><a data-toggle="tab" href="#anhtour">Ảnh du lịch</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div id="home" class="tab-pane fade in active">
+                            <div id="mota" class="tab-pane fade in active">
                                 {!! $tour->description !!}
-
-
-
-
                             </div>
-                            <div id="menu1" class="tab-pane fade">
+                            <div id="lichtrinh" class="tab-pane fade">
                                 <h4>Lịch trình tour</h4>
+                                @if (!empty($schedule))
+                                    {!! $schedule->lichtrinh !!}
+                                @endif
                             </div>
-                            <div id="menu2" class="tab-pane fade">
+                            <div id="chinhsach" class="tab-pane fade">
+                                <h4>Chính sách tour</h4>
+                                @if (!empty($schedule))
+                                    {!! $schedule->chinhsach !!}
+                                @endif
+                            </div>
+                            <div id="baogom" class="tab-pane fade">
+                                <h4>Bao gồm</h4>
+                                @if (!empty($schedule))
+                                    {!! $schedule->baogom !!}
+                                @endif
+                            </div>
+                            <div id="khongbaogom" class="tab-pane fade">
+                                <h4>Không bao gồm</h4>
+                                @if (!empty($schedule))
+                                    {!! $schedule->khongbaogom !!}
+                                @endif
+                            </div>
+                            <div id="anhtour" class="tab-pane fade">
                                 @foreach ($galleries as $key => $gallery)
                                     <img class="img img-responsive"
                                         src="{{ asset('uploads/galleries/' . $gallery->image) }}"

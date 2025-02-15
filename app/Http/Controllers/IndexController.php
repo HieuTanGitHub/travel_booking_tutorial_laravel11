@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Tour;
 use App\Models\Gallery;
+use App\Models\Schedule;
 
 class IndexController extends Controller
 {
@@ -30,8 +31,9 @@ class IndexController extends Controller
     public function detail_tour($slug)
     {
         $tour = Tour::with('category')->where('slug', $slug)->first();
+        $schedule = Schedule::where('tour_id', $tour->id)->first();
         $related_tour = Tour::where('category_id', $tour->category_id)->whereNotIn('id', [$tour->id])->get();
         $galleries = Gallery::where('tour_id', $tour->id)->get();
-        return view('pages.detail_tour', compact('tour', 'related_tour', 'galleries'));
+        return view('pages.detail_tour', compact('tour', 'related_tour', 'galleries', 'schedule'));
     }
 }

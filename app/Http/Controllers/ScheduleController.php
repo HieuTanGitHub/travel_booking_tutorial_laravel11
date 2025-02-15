@@ -69,8 +69,9 @@ class ScheduleController extends Controller
      */
     public function edit(string $id)
     {
+        $schedule = Schedule::where('tour_id', $id)->first();
         $tour = Tour::find($id);
-        return view('admin.schedules.create', compact('tour'));
+        return view('admin.schedules.create', compact('tour', 'schedule'));
     }
 
     /**
