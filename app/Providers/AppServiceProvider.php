@@ -29,10 +29,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-
             $categories = $this->getCategoriesProduct();
+            $category_footer = Category::inRandomOrder()->take(8)->get();
 
-            $view->with('categories', $categories);
+            $view->with([
+                'categories' => $categories,
+                'category_footer' => $category_footer
+            ]);
         });
     }
 }

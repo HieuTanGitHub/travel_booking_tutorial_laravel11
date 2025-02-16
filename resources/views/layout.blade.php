@@ -559,57 +559,37 @@
         </div>
         <div class="col-md-12 col-xs-12 top-30 lst-tour-position">
             <div class="row">
-                <div class="col-md-3 col-xs-6 cl-mb-half-0">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/137-du-lich-thai-lan.html">
-                            <img src="{{ asset('frontend/images/thai-lan.jpg') }}" alt="Du lịch Thái Lan">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Thái Lan</div>
-                        </a>
-                    </div>
+                <style>
+                    .equal-height-row {
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+
+                    .bximg-request-dd {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        /* Ensures equal height */
+                    }
+                </style>
+                <div class="row equal-height-row">
+                    @foreach ($category_footer as $key => $category_foot)
+                        <div class="col-md-3 col-xs-6 cl-mb-half-0">
+                            <div class="bximg-request-dd">
+                                <a target="_blank" href="{{ route('tour', [$category_foot->slug]) }}">
+                                    <img src="{{ asset('uploads/categories/' . $category_foot->image) }}"
+                                        alt="{{ $category_foot->title }}">
+                                    <div class="capition-dd"><i class="fa fa-map-marker"></i>
+                                        {{ $category_foot->title }}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="col-md-3 col-xs-6 cl-mb-half-1">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/145-du-lich-chau-au.html">
-                            <img src="{{ asset('frontend/images/chau-au.jpg') }}" alt="Du lịch Châu Âu">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Châu Âu</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/139-du-lich-han-quoc.html">
-                            <img src="{{ asset('frontend/images/han-quoc.jpg') }}" alt="Du lịch Hàn Quốc">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Hàn Quốc</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="clear"></div>
-                <div class="w100 fl top-30 khkhkocog"></div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/156-du-lich-singapore-malaysia.html">
-                            <img src="{{ asset('frontend/images/du-lich-sing%20620x283.jpg') }}"
-                                alt="Du lịch Singapore Malaysia">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Singapore Malaysia</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6 cl-mb-half-4">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/156-du-lich-singapore-malaysia.html">
-                            <img src="{{ asset('frontend/images/Bali-%20Indo.jpg') }}" alt="Du lịch Bali Indonesia">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Bali Indonesia</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6 cl-mb-half-5">
-                    <div class="bximg-request-dd">
-                        <a href="https://vietnamtravel.net.vn/vi/san-pham/66-du-lich-da-nang-hoi-an-hue.html">
-                            <img src="{{ asset('frontend/images/da-nang.jpg') }}" alt="Du lịch Đà Nẵng Hội An Huế">
-                            <div class="capition-dd"><i class="fa fa-map-marker"></i> Du lịch Đà Nẵng Hội An Huế</div>
-                        </a>
-                    </div>
-                </div>
+
+
+
             </div>
         </div>
     </div>

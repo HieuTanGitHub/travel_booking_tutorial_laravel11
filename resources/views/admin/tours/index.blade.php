@@ -30,11 +30,11 @@
                         <th scope="col">Mã tour</th>
                         <th scope="col">Image</th>
                         <th scope="col">Mô tả</th>
-                        <th scope="col">Slug tour</th>
+                        {{-- <th scope="col">Slug tour</th> --}}
                         <th scope="col">Ngày đi</th>
-                        <th scope="col">Ngày về</th>
+                        {{-- <th scope="col">Ngày về</th> --}}
                         <th scope="col">Nơi đi</th>
-                        <th scope="col">Nơi đến</th>
+                        {{-- <th scope="col">Nơi đến</th> --}}
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Status</th>
                         <th scope="col">Manage</th>
@@ -54,7 +54,7 @@
                             <td>{{ $tour->tour_code }}</td>
                             <td><img height="120" width="120" src="{{ asset('uploads/tours/' . $tour->image) }}"></td>
                             <td>{{ $tour->description }}</td>
-                            <td>{{ $tour->slug }}</td>
+                            {{-- <td>{{ $tour->slug }}</td> --}}
                             <td>
                                 @php
                                     // Convert the string into an array by splitting on commas
@@ -70,9 +70,9 @@
                                 @endif
                             </td>
 
-                            <td>{{ $tour->return_date }}</td>
+                            {{-- <td>{{ $tour->return_date }}</td> --}}
                             <td>{{ $tour->tour_from }}</td>
-                            <td>{{ $tour->tour_to }}</td>
+                            {{-- <td>{{ $tour->tour_to }}</td> --}}
 
                             <td>{{ $tour->created_at }}</td>
 
