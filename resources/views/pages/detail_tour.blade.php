@@ -54,10 +54,18 @@
                                                 <tr>
                                                     <td style="text-align: left;">Ngày khởi hành: </td>
                                                     <td>
-                                                        <a href="">
-                                                            {{ $tour->departure_date }} <a href=""
-                                                                class="tour-other-day" target="_blank">Xem thêm</a>
-                                                        </a>
+                                                        @php
+                                                            // Convert the string into an array by splitting on commas
+                                                            $departureDates = explode(', ', $tour->departure_date);
+                                                        @endphp
+                                                        @if (!empty($departureDates))
+                                                            @foreach ($departureDates as $date)
+                                                                <span
+                                                                    class="badge rounded-pill bg-success inline">{{ $date }}</span>
+                                                            @endforeach
+                                                        @else
+                                                            <span class="text-muted">No departure dates available</span>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -88,9 +96,185 @@
                                                 {{ number_format($tour->price, 0, ',', '.') }} VNĐ
                                             </div>
                                             <div class="clbook-dt span12">
-                                                <span class="booknow btn-dattour buy-booking-tour"><img alt="du lịch"
-                                                        src="https://vietnamtravel.net.vn/assets/desktop/images/btn_register_now.png"
-                                                        class="btn_register_now"></span>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#booking">
+                                                    Đặt tour ngay
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="booking" tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    {{ $tour->title }}
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form>
+                                                                    <div class="col-md-5">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <p>Mã tour: {{ $tour->tour_code }}</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>LIÊN HỆ: 19001868</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Chọn ngày khởi hành:</p>
+                                                                                @php
+                                                                                    // Convert the string into an array by splitting on commas
+                                                                                    $departureDates = explode(
+                                                                                        ', ',
+                                                                                        $tour->departure_date,
+                                                                                    );
+                                                                                @endphp
+                                                                                @if (!empty($departureDates))
+                                                                                    <select class="form-control"
+                                                                                        name="date_departure">
+                                                                                        @foreach ($departureDates as $date)
+                                                                                            <option
+                                                                                                value="{{ $date }}">
+                                                                                                {{ $date }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                @else
+                                                                                    <label for="exampleInputPassword1">Chọn
+                                                                                        một ngày khác</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        name="departure_date"
+                                                                                        id="departure_dates"
+                                                                                        placeholder="....">
+                                                                                @endif
+
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Thời gian tour:
+                                                                                    {{ $tour->tour_time }}
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Phương tiện: {{ $tour->vehicle }}
+                                                                                </p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        <h3>Giá tour cơ bản</h3>
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">Người lớn</th>
+                                                                                    <th scope="col">Trẻ em 6-12</th>
+                                                                                    <th scope="col">Trẻ 2-5</th>
+                                                                                    <th scope="col">Trẻ < 2</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <th scope="row">27,888,000 ₫</th>
+                                                                                    <td>27,888,000 ₫</td>
+                                                                                    <td>23,705,000 ₫</td>
+                                                                                    <td>9,760,000 ₫</td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="row row-datve">
+                                                                        <div class="col-md-7">
+                                                                            <h4>Thông tin liên hệ</h4>
+                                                                            <p>Quý khách vui lòng nhập thông tin người đặt
+                                                                                tour!
+                                                                            </p>
+
+                                                                            <input type="hidden"
+                                                                                value="{{ $tour->tour_code }}"
+                                                                                name="tour_code">
+                                                                            <input type="text" name="fullname" required
+                                                                                placeholder="Họ và tên" class="form-control"
+                                                                                id="exampleInputEmail1"
+                                                                                aria-describedby="emailHelp"
+                                                                                oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên')"
+                                                                                oninput="this.setCustomValidity('')">
+
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    for="exampleInputEmail1">Email</label>
+                                                                                <input required type="email"
+                                                                                    name="email"
+                                                                                    placeholder="Nhập thông tin xác nhận email..."
+                                                                                    class="form-control"
+                                                                                    id="exampleInputEmail1"
+                                                                                    aria-describedby="emailHelp"
+                                                                                    oninvalid="this.setCustomValidity('Nhập thông tin xác nhận email...')"
+                                                                                    oninput="this.setCustomValidity('')">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Điện
+                                                                                    thoại</label>
+                                                                                <input type="text" name="phone"
+                                                                                    required
+                                                                                    placeholder="Nhập số điện thoại"
+                                                                                    class="form-control"
+                                                                                    id="exampleInputEmail1"
+                                                                                    aria-describedby="emailHelp"
+                                                                                    oninvalid="this.setCustomValidity('Nhập số điện thoại...')"
+                                                                                    oninput="this.setCustomValidity('')">
+
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Yêu
+                                                                                    cầu</label>
+                                                                                <textarea required name="note" placeholder="Nhập yêu cầu cần thiết" class="form-control" id="exampleInputEmail1"
+                                                                                    aria-describedby="emailHelp" oninvalid="this.setCustomValidity('Nhập yêu cầu chi tiết của quý khách...')"
+                                                                                    oninput="this.setCustomValidity('')"></textarea>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            <h3>Số lượng khách</h3>
+                                                                            <p>Người lớn</p>
+                                                                            <input class="form-control" type="number"
+                                                                                min="1" value="1"
+                                                                                name="adult">
+                                                                            <p>Trẻ 6 - 11</p>
+                                                                            <input class="form-control" type="number"
+                                                                                min="0" value="0"
+                                                                                name="children6_11">
+                                                                            <p>Trẻ 2 - 5</p>
+                                                                            <input class="form-control" type="number"
+                                                                                value="0" min="0"
+                                                                                name="children2_5">
+                                                                            <p>Trẻ < 2</p>
+                                                                                    <input class="form-control"
+                                                                                        value="0" type="number"
+                                                                                        min="0" name="children_2">
+
+                                                                        </div>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Đăng ký
+                                                                            tour</button>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Đóng</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -146,126 +330,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-xs-12">
-                        <div class="tit-service-attach">Bình luận chia sẻ</div>
-                        <div class="heateor_sss_sharing_container heateor_sss_horizontal_sharing"
-                            heateor-sss-data-href="https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                            <div class="heateor_sss_sharing_title" style="font-weight:bold">Chia sẻ bài viết lên mạng xã
-                                hội</div>
-                            <ul class="heateor_sss_sharing_ul">
-                                <a target="_blank"
-                                    href="https://twitter.com/intent/tweet?text=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html&amp;url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html&amp;via=TWITTER-HANDLER">
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="Twitter"
-                                            title="Twitter" class="heateorSssSharing heateorSssTwitterBackground"
-                                            onclick="">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssTwitterSvg"></ss>
-                                        </i>
-                                    </li>
-                                </a>
-                                <a target="_blank"
-                                    href="https://www.reddit.com/submit?url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html&amp;title=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="Reddit" title="Reddit"
-                                            class="heateorSssSharing heateorSssRedditBackground" onclick="">
-                                            <img alt="du lịch" style="width: 35px;height: 35px;margin: 0px !important;"
-                                                src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-reddit-circle-512.png">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssRedditSvg"></ss>
-                                        </i>
-                                    </li>
-                                </a>
-                                <a target="_blank"
-                                    href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html&amp;title=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html&amp;source=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="Linkedin"
-                                            title="Linkedin" class="heateorSssSharing heateorSssLinkedinBackground"
-                                            onclick="heateorSssPopup(&quot;http://www.linkedin.com/shareArticle?mini=true&amp;url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html;title=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html;)">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssLinkedinSvg"></ss>
-                                        </i>
-                                    </li>
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="Pinterest"
-                                            title="Pinterest" class="heateorSssSharing heateorSssPinterestBackground"
-                                            onclick="javascript:void( (function() {var e=document.createElement('script' );e.setAttribute('type','text/javascript' );e.setAttribute('charset','UTF-8' );e.setAttribute('src','//assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)})());">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssPinterestSvg"></ss>
-                                        </i>
-                                    </li>
-                                </a>
-                                <a target="_blank"
-                                    href="https://mewe.com/share?link=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="MeWe"
-                                            title="MeWe" class="heateorSssSharing heateorSssMeWeBackground"
-                                            onclick="heateorSssPopup(&quot;https://mewe.com/share?link=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html;)">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssMeWeSvg"></ss>
-                                        </i>
-                                    </li>
-                                </a>
-                                <a target="_blank"
-                                    href="https://mix.com/mixit?url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                                    <li class="heateorSssSharingRound">
-                                        <i style="width:35px;height:35px;border-radius:999px;" alt="Mix"
-                                            title="Mix" class="heateorSssSharing heateorSssMixBackground"
-                                            onclick="heateorSssPopup(&quot;https://mix.com/mixit?url=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html;)">
-                                            <img alt="du lịch" style="width: 25px;height: 25px;margin: 5px !important;"
-                                                src="https://images.squarespace-cdn.com/content/5a01d9004c0dbf037353c4d3/1510070616676-ECT3B16K7LK0V3NTFISM/mixlogomark_800x800px+%282%29.png?content-type=image%2Fpng">
-                                            <ss style="display:block;border-radius:999px;"
-                                                class="heateorSssSharingSvg heateorSssMixSvg"></ss>
-                                        </i>
-                                    </li>
-                                </a>
-                                <li class="heateorSssSharingRound">
-                                    <i style="width:35px;height:35px;border-radius:999px;" alt="Whatsapp"
-                                        title="Whatsapp" class="heateorSssSharing heateorSssWhatsappBackground">
-                                        <a href="https://web.whatsapp.com/send?text=https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html"
-                                            rel="nofollow noopener" target="_blank">
-                                            <img alt="du lịch" style="width: 35px;height: 35px;margin: 0px !important;"
-                                                src="https://cdn4.iconfinder.com/data/icons/social-media-2210/24/Whatsapp-512.png">
-                                            <ss style="display:block" class="heateorSssSharingSvg "></ss>
-                                        </a>
-                                    </i>
-                                </li>
-                            </ul>
-                            <div class="heateorSssClear"></div>
-                        </div>
-                        <p>
-                        <div style="width:100%; overflow:hidden">
-                            <div
-                                style="float: left;margin-right: 5px; position: relative; z-index: 1001; line-height: 33px">
-                                <div class="fb-like"
-                                    data-href="https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html"
-                                    data-layout="button_count" data-action="like" data-show-faces="false"
-                                    data-share="false" data-colorscheme="dark"></div>
-                            </div>
-                            <div
-                                style="float: left;margin-right: 5px; position: relative; z-index: 1001; line-height: 33px">
-                                <div class="fb-share-button"
-                                    data-href="https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html"
-                                    data-layout="button_count"></div>
-                            </div>
-                            <div
-                                style="float: left;margin-right: 5px; position: relative; z-index: 1001; line-height: 55px">
-                                <div class="g-plusone" data-size="medium"
-                                    data-href="https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html">
-                                </div>
-                            </div>
-                            <div class="zalo-share-button" data-href="" data-oaid="579745863508352884" data-layout="1"
-                                data-color="blue" data-customize=false></div>
-                        </div>
-                        </p>
-                        <p>
-                        <div class="fb-comments"
-                            data-href="https://vietnamtravel.net.vn/vi/chi-tiet-san-pham/470-tour-hot-nhat-he-2023-quy-nhon-phu-yen-xu-nau-dep-nhat-viet-nam.html#configurator"
-                            data-numposts="10" data-width="100%"></div>
-                        </p>
-                    </div>
-                </div> --}}
+
             </div>
             <div class="col-md-4 col-xs-12 bx-right-bar">
                 <div class="box-support-right">
