@@ -116,7 +116,8 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form>
+                                                                <form method="POST" action="{{ route('booking.store') }}">
+                                                                    @csrf
                                                                     <div class="col-md-5">
                                                                         <ul>
                                                                             <li>
@@ -198,6 +199,7 @@
                                                                             <input type="hidden"
                                                                                 value="{{ $tour->tour_code }}"
                                                                                 name="tour_code">
+
                                                                             <input type="text" name="fullname" required
                                                                                 placeholder="Họ và tên" class="form-control"
                                                                                 id="exampleInputEmail1"
