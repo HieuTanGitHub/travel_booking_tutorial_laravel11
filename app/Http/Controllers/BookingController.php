@@ -12,7 +12,8 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::orderBy('id', 'DESC')->get();
+        return view('admin.bookings.index', compact('bookings'));
     }
 
     /**
@@ -44,9 +45,11 @@ class BookingController extends Controller
         $booking->note = $data['note'];
         $booking->phone = $data['phone'];
         $booking->adult = $data['adult'];
+
         $booking->children6_11 = $data['children6_11'];
         $booking->children2_5 = $data['children2_5'];
         $booking->children2 = $data['children_2'];
+
         $booking->save();
         toastr()->success('Đặt tour thành công,vui lòng chờ hệ thống liên hệ!', 'Đặt thành công');
         return redirect()->back();
