@@ -40,9 +40,9 @@
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="fa-solid fa-earth-americas"></i>
                         <p>
-                            Dashboard
+                            Thống kê
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -51,14 +51,14 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Thống kê</p>
+                                <p>Tất cả</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ Request::segment(1) == 'booking' ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="fa-solid fa-person-walking-luggage"></i>
                         <p>
                             Tour đã đặt
                             <i class="right fas fa-angle-left"></i>
@@ -66,7 +66,7 @@
                     </a>
                     <ul class="nav nav-treeview">
 
-                        <li class="nav-item {{ Request::segment(1) == 'booking' ? 'menu-is-opening menu-open' : '' }}">
+                        <li class="nav-item">
                             <a href="{{ route('booking.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tất cả tour</p>
@@ -77,7 +77,7 @@
                 </li>
                 <li class="nav-item  {{ Request::segment(1) == 'categories' ? 'menu-is-opening menu-open' : '' }} ">
                     <a href="{{ route('categories.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-folder-open"></i>
+                        <i class="fa-solid fa-plane"></i>
                         <p>
                             Danh mục tours
                             <i class="right fas fa-angle-left"></i>
@@ -101,7 +101,7 @@
                 </li>
                 <li class="nav-item  {{ Request::segment(1) == 'tours' ? 'menu-is-opening menu-open' : '' }} ">
                     <a href="{{ route('tours.index') }}" class="nav-link">
-                        <i class="fa-solid fa-globe"></i>
+                        <i class="fa-solid fa-plane-up"></i>
                         <p>
                             Tours
                             <i class="right fas fa-angle-left"></i>
@@ -119,6 +119,54 @@
                             <a href="{{ route('tours.index') }}" class="nav-link">
                                 <i class="fa-solid fa-gears"></i>
                                 <p>Danh sách tour</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item  {{ Request::segment(1) == 'hotel' ? 'menu-is-opening menu-open' : '' }} ">
+                    <a href="{{ route('tours.index') }}" class="nav-link">
+                        <i class="fa-solid fa-hotel"></i>
+                        <p>
+                            Khách Sạn
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa-solid fa-gears"></i>
+                                <p>Thêm khách sạn</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa-solid fa-gears"></i>
+                                <p>Danh sách khách sạn</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item  {{ Request::segment(1) == 'bus' ? 'menu-is-opening menu-open' : '' }} ">
+                    <a href="{{ route('tours.index') }}" class="nav-link">
+                        <i class="fa-solid fa-van-shuttle"></i>
+                        <p>
+                            Xe khách
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa-solid fa-gears"></i>
+                                <p>Thêm xe khách</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa-solid fa-gears"></i>
+                                <p>Danh sách xe khách</p>
                             </a>
                         </li>
                     </ul>

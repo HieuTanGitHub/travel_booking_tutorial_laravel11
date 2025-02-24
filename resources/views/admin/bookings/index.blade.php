@@ -26,10 +26,10 @@
                         <th scope="col">Email</th>
                         <th scope="col">Note</th>
                         <th scope="col">Phone</th>
-                        <th scope="col">Created date</th>
-                        <th scope="col">Updated date</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Manage</th>
+                        <th scope="col">Ngày đặt</th>
+                        <th scope="col">Ngày cập nhật</th>
+                        <th scope="col">Tình trạng</th>
+                        <th scope="col">Quản lý</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,7 +53,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('booking.edit', [$booking->id]) }}" class="btn btn-warning">Xem</a>
+                                <a href="{{ route('booking.show', [$booking->id]) }}" class="btn btn-warning">Xem</a>
                                 <form onsubmit="return confirm('Bạn có muốn xóa không?');"
                                     action="{{ route('booking.destroy', [$booking->id]) }}" method="POST">
                                     @method('DELETE')

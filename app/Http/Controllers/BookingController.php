@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Tour;
 
 class BookingController extends Controller
 {
@@ -60,7 +61,9 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $booking = Booking::find($id);
+        $tour = Tour::where('tour_code', $booking->tour_id)->first();
+        return view('admin.bookings.show', compact('booking', 'tour'));
     }
 
     /**
