@@ -48,7 +48,12 @@
                             <th scope="row"><a href="{{ route('schedule.edit', [$tour->id]) }}">Thêm lịch trình</a></th>
                             <td>{{ $tour->title }}</td>
                             <td>{{ $tour->category->title }}</td>
-                            <td>{{ number_format($tour->price, 0, ',', '.') }}vnd</td>
+                            <td>{{ number_format($tour->price, 0, ',', '.') }}vnd
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#themgia">
+                                    Thêm giá tour
+                                </button>
+
+                            </td>
                             <td>{{ $tour->quantity }}</td>
                             <td>{{ $tour->vehicle }}</td>
                             <td>{{ $tour->tour_code }}</td>
@@ -99,6 +104,50 @@
             </table>
         </div>
     </div>
+    <!-- Modal Thêm giá tour -->
+    <div class="modal fade" id="themgia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm giá cho tour</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('tourprice.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Giá mặc định</th>
+                                    <th scope="col">Giá người lớn</th>
+                                    <th scope="col">Giá trẻ em 6 - 11 tuổi</th>
+                                    <th scope="col">Giá trẻ em 5 tuổi</th>
+                                    <th scope="col">Giá trẻ em < 2 tuổi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">{{ number_format($tour->price, 0, ',', '.') }}vnd</th>
+                                    <td><input type="text" required name="adult" class="form-control"></td>
+                                    <td><input type="text" required name="children6_11" class="form-control"></td>
+                                    <td><input type="text" required name="children5" class="form-control"></td>
+                                    <td><input type="text" required name="children2" class="form-control"></td>
+                                </tr>
 
+
+                            </tbody>
+                        </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Cập nhật giá</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection
