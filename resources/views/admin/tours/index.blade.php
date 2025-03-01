@@ -49,7 +49,8 @@
                             <td>{{ $tour->title }}</td>
                             <td>{{ $tour->category->title }}</td>
                             <td>{{ number_format($tour->price, 0, ',', '.') }}vnd
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#themgia">
+                                <button type="button" data-tour_id="{{ $tour->id }}"
+                                    class="btn btn-primary btn-create-price" data-toggle="modal" data-target="#themgia">
                                     Thêm giá tour
                                 </button>
 
@@ -117,11 +118,11 @@
                 <div class="modal-body">
                     <form action="{{ route('tourprice.store') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Giá mặc định</th>
+                                    <th scope="col">Ngày khởi hành</th>
                                     <th scope="col">Giá người lớn</th>
                                     <th scope="col">Giá trẻ em 6 - 11 tuổi</th>
                                     <th scope="col">Giá trẻ em 5 tuổi</th>
@@ -130,24 +131,69 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">{{ number_format($tour->price, 0, ',', '.') }}vnd</th>
+                                    <td>
+                                        <select name="tour_date" id="tour-date-select" class="form-control">
+
+                                        </select>
+                                    </td>
                                     <td><input type="text" required name="adult" class="form-control"></td>
                                     <td><input type="text" required name="children6_11" class="form-control"></td>
                                     <td><input type="text" required name="children5" class="form-control"></td>
                                     <td><input type="text" required name="children2" class="form-control"></td>
                                 </tr>
-
-
                             </tbody>
                         </table>
+                        <div id="tour-details">
+                            <!-- Data will be loaded here -->
+                        </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Cập nhật giá</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật giá</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".btn-create-price").click(function() {
+                let tourId = $(this).data("tour_id");
 
+                $.ajax({
+                    url: "/get-tour-details", // Update this to your actual route
+                    type: "GET",
+                    data: {
+                        tour_id: tourId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $("#tour-details").html(`
+                        <p><strong>Tên tour:</strong> ${response.data.name}</p>
+                        <p><strong>Giá mặc định:</strong> ${response.data.price} VND</p>
+                        <p><strong>Mô tả:</strong> ${response.data.description}</p>
+                    `);
+                            let select = $("#tour-date-select");
+                            select.empty(); // Clear previous options
+                            select.append('<option value="">Chọn ngày khởi hành</option>');
+
+                            response.data.departure_dates.forEach(function(date) {
+                                select.append(
+                                    `<option value="${date}">${date}</option>`);
+                            });
+                        } else {
+                            $("#tour-details").html(
+                                "<p class='text-danger'>Không tìm thấy thông tin tour.</p>");
+                        }
+                    },
+                    error: function() {
+                        $("#tour-details").html(
+                            "<p class='text-danger'>Lỗi khi lấy dữ liệu.</p>");
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
 @endsection

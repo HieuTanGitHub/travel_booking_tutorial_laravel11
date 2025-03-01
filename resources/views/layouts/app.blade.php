@@ -298,6 +298,7 @@
             return true; // Allow form submission
         }
     </script>
+    @yield('scripts')
 </body>
 
 </html>

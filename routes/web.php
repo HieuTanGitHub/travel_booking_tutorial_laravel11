@@ -21,6 +21,7 @@ Route::resource('categories', CategoriesController::class);
 
 //tours
 Route::resource('tours', ToursController::class);
+Route::get('/get-tour-details', [TourPriceController::class, 'getTourDetails']);
 //gallery
 Route::resource('gallery', GalleryController::class);
 //schedule
